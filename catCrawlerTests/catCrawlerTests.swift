@@ -25,6 +25,25 @@ class catCrawlerTests: XCTestCase {
         // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
     }
+    
+    func testCatCrawling() {
+        let expection = XCTestExpectation(description: "Cat Crawling")
+        
+        let service = CatService()
+        service.getCats(page: 0, limit: 0) { result in
+            switch result {
+            case .failure(let error):
+                expection.fulfill()
+            case .success(let response):
+                print(response)
+                expection.fulfill()
+            }
+        }
+        
+        wait(for: [expection], timeout: 10.0)
+    }
+    
+    
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
